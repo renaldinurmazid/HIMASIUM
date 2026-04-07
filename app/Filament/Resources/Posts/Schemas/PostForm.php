@@ -4,6 +4,7 @@ namespace App\Filament\Resources\Posts\Schemas;
 
 use Filament\Forms\Components\DateTimePicker;
 use Filament\Forms\Components\FileUpload;
+use Filament\Forms\Components\MarkdownEditor;
 use Filament\Forms\Components\RichEditor;
 use Filament\Forms\Components\Select;
 use Filament\Forms\Components\TextInput;
@@ -32,8 +33,7 @@ class PostForm
                     ->readOnly()
                     ->dehydrated()
                     ->required(),
-                RichEditor::make('content')
-                    ->json()
+                MarkdownEditor::make('content')
                     ->required()
                     ->columnSpanFull(),
                 FileUpload::make('featured_image')

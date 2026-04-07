@@ -23,13 +23,13 @@
 
     <div class="px-4">
         <!-- Category -->
-        <p class="text-indigo-600 font-bold text-sm mb-2 tracking-wide uppercase">
+        <p class="text-blue-800 font-bold text-sm mb-2 tracking-wide uppercase">
             {{ $post->category->name ?? 'Uncategorized' }}
         </p>
 
         <!-- Title -->
         <a href="{{ route('blog.show', $post->slug) }}" class="block mb-3">
-            <h3 class="text-2xl font-bold text-slate-900 group-hover:text-indigo-600 transition-colors leading-tight">
+            <h3 class="text-2xl font-bold text-slate-900 group-hover:text-blue-800 transition-colors leading-tight">
                 {{ $post->title }}
             </h3>
         </a>

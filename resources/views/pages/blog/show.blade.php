@@ -8,7 +8,7 @@
             <!-- Header -->
             <div class="text-center mb-16">
                 @if($post->published_at)
-                    <p class="text-indigo-600 font-bold tracking-widest uppercase text-xs mb-4">
+                    <p class="text-blue-800 font-bold tracking-widest uppercase text-xs mb-4">
                         Published {{ $post->published_at->format('M d, Y') }}
                     </p>
                 @endif
@@ -26,7 +26,7 @@
                 <!-- Tags / Category -->
                 <div class="flex flex-wrap justify-center gap-3">
                     @if($post->category)
-                        <span class="px-4 py-1.5 rounded-full border-2 border-indigo-100 text-indigo-600 text-xs font-bold uppercase tracking-wider">
+                        <span class="px-4 py-1.5 rounded-full border-2 border-blue-100 text-blue-800 text-xs font-bold uppercase tracking-wider">
                             {{ $post->category->name }}
                         </span>
                     @endif
@@ -44,14 +44,8 @@
             </div>
 
             <!-- Content -->
-            <div class="prose prose-slate prose-lg lg:prose-xl max-w-none prose-headings:font-extrabold prose-headings:tracking-tight prose-p:text-slate-600 prose-p:leading-loose prose-strong:text-slate-900 prose-img:rounded-3xl">
-                @if(is_array($post->content))
-                    {{-- In Filament v3, if using ->json(), content will be a JSON array. 
-                         You might need a tiptap-to-html converter here or just remove ->json() in PostForm to get HTML string. --}}
-                    [Konten tersimpan dalam format JSON. Sila gunakan renderer atau matikan ->json() di PostForm untuk menyimpan HTML.]
-                @else
-                    {!! $post->content !!}
-                @endif
+            <div class="space-y-4">
+                {!! str($post->content)->markdown()->sanitizeHtml() !!}
             </div>
 
             <!-- Footer Author -->
@@ -60,7 +54,7 @@
                     <img class="h-20 w-20 rounded-full object-cover shadow-lg ring-4 ring-slate-50" src="https://ui-avatars.com/api/?name={{ urlencode($post->user->name ?? 'A') }}&background=6366f1&color=fff" alt="Author">
                 </div>
                 <div class="text-center md:text-left">
-                    <p class="text-xs font-extrabold text-indigo-600 uppercase tracking-widest mb-1">Written by</p>
+                    <p class="text-xs font-extrabold text-blue-800 uppercase tracking-widest mb-1">Written by</p>
                     <h3 class="text-2xl font-bold text-slate-900 mb-2">{{ $post->user->name ?? 'Anonymous' }}</h3>
                     <p class="text-slate-500 max-w-md">Dedikasi untuk pengembangan ilmu pengetahuan dan inovasi di lingkungan Sistem Informasi.</p>
                 </div>

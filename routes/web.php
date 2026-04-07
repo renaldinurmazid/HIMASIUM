@@ -1,23 +1,19 @@
 <?php
 
+use App\Http\Controllers\BlogController;
 use Illuminate\Support\Facades\Route;
 
-Route::get('/', function () {
-    return view('pages.home.index');
-})->name('home');
+use App\Http\Controllers\HomeController;
 
-Route::get('/blog', function () {
-    return view('pages.blog.index');
-})->name('blog');
+Route::get('/', [HomeController::class, 'index'])->name('home');
 
-Route::get('/blog/{slug}', function ($slug) {
-    $post = \App\Models\Post::where('slug', $slug)->firstOrFail();
-    return view('pages.blog.show', compact('post'));
-})->name('blog.show');
+Route::get('/blog', [BlogController::class, 'index'])->name('blog');
 
-Route::get('/product', function () {
-    return view('pages.product.index');
-})->name('product');
+Route::get('/blog/{slug}', [BlogController::class, 'show'])->name('blog.show');
+
+use App\Http\Controllers\ProductController;
+
+Route::get('/product', [ProductController::class, 'index'])->name('product');
 
 Route::get('/contact', function () {
     return view('pages.contact.index');
