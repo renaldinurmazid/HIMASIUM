@@ -183,7 +183,7 @@
                         </div>
 
                         <div class="relative rounded-2xl overflow-hidden group aspect-[4/3]">
-                            <img src="{{ asset('assets/olbar.jpg') }}" alt="OLBAR" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">
+                            <img src="{{ asset('assets/olbar-1.jpg') }}" alt="OLBAR" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">
                             <div class="absolute inset-0 bg-gradient-to-t from-blue-700/90 via-blue-700/30 to-transparent"></div>
                             <div class="absolute bottom-0 left-0 right-0 p-5">
                                 <h4 class="text-lg font-extrabold text-white uppercase tracking-wide mb-1">OLBAR</h4>
