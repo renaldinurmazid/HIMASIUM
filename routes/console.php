@@ -6,3 +6,7 @@ use Illuminate\Support\Facades\Artisan;
 Artisan::command('inspire', function () {
     $this->comment(Inspiring::quote());
 })->purpose('Display an inspiring quote');
+
+// Schedule the Fonnte message command to run every minute
+use Illuminate\Support\Facades\Schedule;
+Schedule::command('app:send-scheduled-message')->dailyAt('00:00');
