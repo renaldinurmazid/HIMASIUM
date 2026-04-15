@@ -38,69 +38,19 @@ class SendScheduledMessage extends Command
             return;
         }
 
-        // Jangan lupa set FONNTE_TOKEN di file .env
-        $token = env('FONNTE_TOKEN', 'TOKEN_ANDA_DISINI');
-
         foreach ($schedules as $schedule) {
-            $this->info("Mengirim pesan untuk ID Jadwal: {$schedule->id}");
+            $this->info("Memasukkan ID Jadwal {$schedule->id} ke antrian (Queue)...");
             
-            $target = '120363423320731159@g.us'; 
-            $tanggalEvent = $schedule->start_event->translatedFormat('d F Y');
+            // Ubah status ke sent di awal untuk menghindari job dipanggil berulang kali 
+            // oleh scheduler berikutnya, jika ada antrian yang numpuk.
+            $schedule->update([
+                'status' => 'sent'
+            ]);
 
-            $message = "Halo {$schedule->koordinator}! 👋\n\nSekadar mengingatkan nih, jadwal untuk postingan *{$schedule->title_event}* sudah dekat (tanggal {$tanggalEvent}).\n\nPesan Catatan: \n{$schedule->message}\n\nJangan lupa disiapkan kontennya ya supaya bisa segera dipublish. Kalau ada kendala, kabari saja. Semangat! ✨";
-
-            $curl = curl_init();
-
-            curl_setopt_array($curl, array(
-              CURLOPT_URL => 'https://api.fonnte.com/send',
-              CURLOPT_RETURNTRANSFER => true,
-              CURLOPT_ENCODING => '',
-              CURLOPT_MAXREDIRS => 10,
-              CURLOPT_TIMEOUT => 0,
-              CURLOPT_FOLLOWLOCATION => true,
-              CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
-              CURLOPT_CUSTOMREQUEST => 'POST',
-              CURLOPT_POSTFIELDS => array(
-                'target' => $target,
-                'message' => $message,
-                // 'url' => 'https://md.fonnte.com/images/wa-logo.png', // Opsional
-                // 'filename' => 'filename', // Opsional
-                'schedule' => 0,
-                'typing' => false,
-                'delay' => '2',
-                'countryCode' => '62',
-                // 'file' => new \CURLFile("localfile.jpg"), // Hapus/comment jika tidak kirim file lokal
-                // 'location' => '-7.983908, 112.621391', // Opsional
-                'followup' => 0,
-                'inboxid' => 0,
-                'duration' => 1,
-              ),
-              CURLOPT_HTTPHEADER => array(
-                'Authorization: ' . $token
-              ),
-            ));
-
-            $response = curl_exec($curl);
-            $error_msg = null;
-            if (curl_errno($curl)) {
-              $error_msg = curl_error($curl);
-            }
-            curl_close($curl);
-
-            if (isset($error_msg)) {
-                $this->error("Gagal mengirim ID {$schedule->id}: $error_msg");
-                Log::error("Fonnte API Error (Schedule {$schedule->id}): $error_msg");
-            } else {
-                $this->info("Berhasil mengirim ID {$schedule->id}. Response: $response");
-                Log::info("Fonnte API Success (Schedule {$schedule->id}): $response");
-                
-                // Ubah status ke sent setelah dikirim
-                $schedule->update([
-                    'status' => 'sent'
-                ]);
-            }
+            // Dispatch jobnya ke Queue
+            \App\Jobs\SendFonnteMessage::dispatch($schedule);
         }
         
-        $this->info('Selesai memproses pesan jadwal.');
+        $this->info('Selesai memproses pemanggilan antrian pesan jadwal.');
     }
 }
