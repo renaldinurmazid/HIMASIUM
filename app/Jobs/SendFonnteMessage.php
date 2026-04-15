@@ -34,7 +34,7 @@ class SendFonnteMessage implements ShouldQueue
         
         $tanggalEvent = $this->schedule->start_event->translatedFormat('d F Y');
 
-        $message = "Halo {$this->schedule->koordinator}! 👋\n\nSekadar mengingatkan nih, jadwal untuk postingan *{$this->schedule->title_event}* sudah dekat (tanggal {$tanggalEvent}).\n\nPesan Catatan: \n{$this->schedule->message}\n\nJangan lupa disiapkan kontennya ya supaya bisa segera dipublish. Kalau ada kendala, kabari saja. Semangat! ✨";
+        $message = "Halo {$this->schedule->koordinator}! 👋\n\nSekadar mengingatkan nih, jadwal untuk postingan *{$this->schedule->title_event}* sudah dekat (tanggal {$tanggalEvent}).\n\nJangan lupa disiapkan kontennya ya supaya bisa segera dipublish. Kalau ada kendala, kabari saja. Semangat! ✨";
 
         $curl = curl_init();
 
