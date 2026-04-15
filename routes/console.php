@@ -9,4 +9,4 @@ Artisan::command('inspire', function () {
 
 // Schedule the Fonnte message command to run every minute
 use Illuminate\Support\Facades\Schedule;
-Schedule::command('app:send-scheduled-message')->dailyAt('00:00');
+Schedule::command('app:send-scheduled-message')->everyMinute();
