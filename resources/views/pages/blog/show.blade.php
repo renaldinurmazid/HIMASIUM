@@ -45,7 +45,7 @@
 
             <!-- Content -->
             <div class="space-y-4">
-                {!! str($post->content)->markdown()->sanitizeHtml() !!}
+                {!! str($post->content)->sanitizeHtml() !!}
             </div>
             <br><br>
             <div id="disqus_thread"></div>

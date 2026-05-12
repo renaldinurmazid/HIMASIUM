@@ -33,8 +33,29 @@ class PostForm
                     ->readOnly()
                     ->dehydrated()
                     ->required(),
-                MarkdownEditor::make('content')
+                RichEditor::make('content')
                     ->required()
+                    ->toolbarButtons([
+                        'attachFiles',
+                        'blockquote',
+                        'bold',
+                        'bulletList',
+                        'codeBlock',
+                        'h2',
+                        'h3',
+                        'italic',
+                        'link',
+                        'orderedList',
+                        'redo',
+                        'strike',
+                        'undo',
+                        'alignStart',
+                        'alignCenter',
+                        'alignEnd',
+                        'alignJustify',
+                    ])
+                    ->fileAttachmentsDirectory('posts/content')
+                    ->resizableImages()
                     ->columnSpanFull(),
                 FileUpload::make('featured_image')
                     ->label('Banner')
